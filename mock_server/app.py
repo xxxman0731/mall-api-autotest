@@ -123,6 +123,12 @@ def init_db():
     conn.close()
 
 
+@app.get("/")
+def index():
+    """商城前端页面(静态文件托管)。"""
+    return app.send_static_file("index.html")
+
+
 @app.get("/api/health")
 def health():
     return ok({"status": "up", "time": now_str()})

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mall 商城 · 电商演示</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-logo">🛍️</span>
+        <span class="brand-name">Mall<span class="brand-accent">商城</span></span>
+      </div>
+      <nav class="nav">
+        <button class="nav-btn active" data-view="products">🛒 商品</button>
+        <button class="nav-btn" data-view="orders">📦 我的订单</button>
+      </nav>
+      <div class="user-area">
+        <span id="userLabel" class="user-label hidden"></span>
+        <button id="loginBtn" class="btn btn-ghost">登录 / 注册</button>
+        <button id="logoutBtn" class="btn btn-ghost hidden">退出</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>精选好物,一键下单</h1>
+    <p>电商核心链路演示 · 接口自动化测试实战项目配套前端</p>
+  </section>
+
+  <main>
+    <section id="view-products" class="view active">
+      <div id="productGrid" class="product-grid">
+        <div class="loading"><span class="spinner"></span>加载中…</div>
+      </div>
+    </section>
+    <section id="view-orders" class="view">
+      <div id="orderList" class="order-list"></div>
+    </section>
+  </main>
+
+  <div id="authModal" class="modal-backdrop hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">欢迎回来</h2>
+        <button class="modal-close" id="modalClose">×</button>
+      </div>
+      <div class="modal-tabs">
+        <button id="tabLogin" class="tab active">登录</button>
+        <button id="tabRegister" class="tab">注册</button>
+      </div>
+      <form id="authForm">
+        <label>用户名<input id="username" type="text" placeholder="3-20 位字母 / 数字 / 下划线" autocomplete="username"></label>
+        <label>密码<input id="password" type="password" placeholder="至少 6 位" autocomplete="current-password"></label>
+        <label id="phoneField" class="hidden">手机号(可选)<input id="phone" type="text" placeholder="11 位数字"></label>
+        <button type="submit" class="btn btn-primary btn-block" id="submitBtn">登 录</button>
+      </form>
+      <p class="modal-tip">演示账号:auto_main_user / Test123456(运行过测试后存在,也可直接注册新账号)</p>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
