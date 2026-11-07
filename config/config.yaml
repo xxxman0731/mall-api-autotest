@@ -1,0 +1,24 @@
+# ============ 环境配置 ============
+# 被测系统地址(本地 Demo 服务)
+base_url: "http://127.0.0.1:5000"
+
+# 数据库配置(用于落库校验)
+# type 支持 sqlite(默认,开箱即用) 与 mysql(可选,需自行安装 MySQL)
+database:
+  type: sqlite
+  sqlite_path: "mock_server/mall.db"
+  mysql:
+    host: "127.0.0.1"
+    port: 3306
+    user: "root"
+    password: "123456"
+    dbname: "mall"
+    charset: "utf8mb4"
+
+# 主测试账号(会话级 fixture 自动注册并登录)
+test_user:
+  username: "auto_main_user"
+  password: "Test123456"
+
+# 密码加密盐值(需与被测系统保持一致,仅教学演示用)
+password_salt: "mall-salt-2025"

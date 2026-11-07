@@ -1,0 +1,14 @@
+# 核心依赖(必装)
+requests
+flask
+PyYAML
+pytest
+
+# 测试报告(可选:生成 Allure 报告需要,还需安装 allure 命令行)
+allure-pytest
+
+# 数据库校验-MySQL 模式(可选)
+pymysql
+
+# 性能测试(可选:Python 版压测工具)
+locust

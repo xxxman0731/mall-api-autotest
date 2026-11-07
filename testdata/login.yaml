@@ -1,0 +1,67 @@
+# 登录接口测试数据
+cases:
+  - case_id: login_001
+    case_name: 登录成功-返回token
+    request:
+      username: auto_main_user
+      password: Test123456
+    expected:
+      status_code: 200
+      biz_code: 0
+      token_exists: true
+      user_id_matches_db: true
+  - case_id: login_002
+    case_name: 密码错误
+    request:
+      username: auto_main_user
+      password: WrongPass123
+    expected:
+      status_code: 401
+      biz_code: 1005
+  - case_id: login_003
+    case_name: 用户不存在
+    request:
+      username: no_such_user_xyz
+      password: Test123456
+    expected:
+      status_code: 401
+      biz_code: 1005
+  - case_id: login_004
+    case_name: 缺少username字段
+    request:
+      password: Test123456
+    expected:
+      status_code: 400
+      biz_code: 400
+  - case_id: login_005
+    case_name: 缺少password字段
+    request:
+      username: auto_main_user
+    expected:
+      status_code: 400
+      biz_code: 400
+  - case_id: login_006
+    case_name: 用户名大小写敏感
+    request:
+      username: AUTO_MAIN_USER
+      password: Test123456
+    expected:
+      status_code: 401
+      biz_code: 1005
+  - case_id: login_007
+    case_name: 空密码
+    request:
+      username: auto_main_user
+      password: ""
+    expected:
+      status_code: 400
+      biz_code: 400
+  - case_id: login_008
+    case_name: 重复登录-再次获取token
+    request:
+      username: auto_main_user
+      password: Test123456
+    expected:
+      status_code: 200
+      biz_code: 0
+      token_exists: true

@@ -1,0 +1,60 @@
+# 商品接口测试数据
+cases:
+  - case_id: product_001
+    case_name: 商品列表-正常返回
+    request: {}
+    expected:
+      status_code: 200
+      biz_code: 0
+      list_min_length: 5
+      item_fields: [id, name, price, stock, status]
+  - case_id: product_002
+    case_name: 商品列表-包含初始商品
+    request: {}
+    expected:
+      status_code: 200
+      biz_code: 0
+      contains_name: iPhone 15 Pro
+  - case_id: product_003
+    case_name: 商品详情-响应与数据库一致
+    request:
+      product_id: 1
+    expected:
+      status_code: 200
+      biz_code: 0
+      db_check:
+        sql: SELECT id, name, price, stock, status FROM products WHERE id = ?
+        params: [1]
+        compare_fields: [name, price, stock]
+  - case_id: product_004
+    case_name: 商品详情-商品不存在
+    request:
+      product_id: 99999
+    expected:
+      status_code: 404
+      biz_code: 1006
+  - case_id: product_005
+    case_name: 商品详情-id为0
+    request:
+      product_id: 0
+    expected:
+      status_code: 404
+      biz_code: 1006
+  - case_id: product_006
+    case_name: 商品详情-id为负数
+    request:
+      product_id: -1
+    expected:
+      status_code: 404
+  - case_id: product_007
+    case_name: 商品详情-id非数字
+    request:
+      product_id: abc
+    expected:
+      status_code: 404
+  - case_id: product_008
+    case_name: 商品列表-业务码为0
+    request: {}
+    expected:
+      status_code: 200
+      biz_code: 0

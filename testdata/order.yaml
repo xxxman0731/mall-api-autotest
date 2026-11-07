@@ -1,0 +1,109 @@
+# 下单接口测试数据
+cases:
+  - case_id: order_001
+    case_name: 下单成功-购买1件+落库校验
+    request:
+      product_id: 1
+      quantity: 1
+    expected:
+      status_code: 201
+      biz_code: 0
+      db_check:
+        order_record: true
+        total_price: true
+        stock_decrement: true
+  - case_id: order_002
+    case_name: 下单成功-购买2件
+    request:
+      product_id: 1
+      quantity: 2
+    expected:
+      status_code: 201
+      biz_code: 0
+      db_check:
+        order_record: true
+        total_price: true
+        stock_decrement: true
+  - case_id: order_003
+    case_name: 下单成功-数量上限边界99
+    request:
+      product_id: 2
+      quantity: 99
+    expected:
+      status_code: 201
+      biz_code: 0
+      db_check:
+        order_record: true
+        stock_decrement: true
+  - case_id: order_004
+    case_name: 数量为0-下边界外
+    request:
+      product_id: 1
+      quantity: 0
+    expected:
+      status_code: 400
+      biz_code: 1008
+  - case_id: order_005
+    case_name: 数量为负数
+    request:
+      product_id: 1
+      quantity: -1
+    expected:
+      status_code: 400
+      biz_code: 1008
+  - case_id: order_006
+    case_name: 数量100-上边界外
+    request:
+      product_id: 1
+      quantity: 100
+    expected:
+      status_code: 400
+      biz_code: 1008
+  - case_id: order_007
+    case_name: 数量非数字
+    request:
+      product_id: 1
+      quantity: abc
+    expected:
+      status_code: 400
+      biz_code: 1008
+  - case_id: order_008
+    case_name: 缺少quantity字段
+    request:
+      product_id: 1
+    expected:
+      status_code: 400
+      biz_code: 1008
+  - case_id: order_009
+    case_name: 缺少product_id字段
+    request:
+      quantity: 1
+    expected:
+      status_code: 400
+      biz_code: 1008
+  - case_id: order_010
+    case_name: 商品不存在
+    request:
+      product_id: 99999
+      quantity: 1
+    expected:
+      status_code: 404
+      biz_code: 1006
+  - case_id: order_011
+    case_name: 未携带token
+    auth: false
+    request:
+      product_id: 1
+      quantity: 1
+    expected:
+      status_code: 401
+      biz_code: 1007
+  - case_id: order_012
+    case_name: token无效
+    token: invalid_token_123
+    request:
+      product_id: 1
+      quantity: 1
+    expected:
+      status_code: 401
+      biz_code: 1007

@@ -1,0 +1,127 @@
+# 注册接口测试数据(数据驱动:用例与代码分离,可直接在下方新增用例)
+cases:
+  - case_id: register_001
+    case_name: 注册成功-正常参数+落库校验
+    request:
+      username: auto_user_001
+      password: Test123456
+      phone: "13800000001"
+    expected:
+      status_code: 201
+      biz_code: 0
+      db_check:
+        sql: SELECT id, password, phone FROM users WHERE username = ?
+        params: [auto_user_001]
+        expect_exists: true
+        password_md5_of: Test123456
+        phone_equals: "13800000001"
+  - case_id: register_002
+    case_name: 注册成功-用户名最小边界3位
+    request:
+      username: ab1
+      password: Test123456
+    expected:
+      status_code: 201
+      biz_code: 0
+  - case_id: register_003
+    case_name: 注册成功-密码最小边界6位
+    request:
+      username: auto_user_003
+      password: Test12
+    expected:
+      status_code: 201
+      biz_code: 0
+  - case_id: register_004
+    case_name: 注册成功-手机号可选不传
+    request:
+      username: auto_user_004
+      password: Test123456
+    expected:
+      status_code: 201
+      biz_code: 0
+  - case_id: register_005
+    case_name: 用户名2位-小于最小边界
+    request:
+      username: ab
+      password: Test123456
+    expected:
+      status_code: 400
+      biz_code: 1001
+  - case_id: register_006
+    case_name: 用户名21位-超出最大边界
+    request:
+      username: "aaaaaaaaaaaaaaaaaaaaa"
+      password: Test123456
+    expected:
+      status_code: 400
+      biz_code: 1001
+  - case_id: register_007
+    case_name: 密码5位-小于最小边界
+    request:
+      username: auto_user_007
+      password: Test1
+    expected:
+      status_code: 400
+      biz_code: 1002
+  - case_id: register_008
+    case_name: 缺少username字段
+    request:
+      password: Test123456
+    expected:
+      status_code: 400
+      biz_code: 400
+      msg_contains: username
+  - case_id: register_009
+    case_name: 缺少password字段
+    request:
+      username: auto_user_009
+    expected:
+      status_code: 400
+      biz_code: 400
+      msg_contains: password
+  - case_id: register_010
+    case_name: 用户名已存在-重复注册
+    pre_register:
+      username: auto_user_010
+      password: Test123456
+    request:
+      username: auto_user_010
+      password: Test123456
+    expected:
+      status_code: 409
+      biz_code: 1004
+  - case_id: register_011
+    case_name: 手机号10位-格式非法
+    request:
+      username: auto_user_011
+      password: Test123456
+      phone: "1380000000"
+    expected:
+      status_code: 400
+      biz_code: 1003
+  - case_id: register_012
+    case_name: 手机号含字母-格式非法
+    request:
+      username: auto_user_012
+      password: Test123456
+      phone: "1380000000a"
+    expected:
+      status_code: 400
+      biz_code: 1003
+  - case_id: register_013
+    case_name: 用户名含特殊字符-格式非法
+    request:
+      username: "auto@#"
+      password: Test123456
+    expected:
+      status_code: 400
+      biz_code: 1001
+  - case_id: register_014
+    case_name: 用户名为空字符串
+    request:
+      username: ""
+      password: Test123456
+    expected:
+      status_code: 400
+      biz_code: 400
+      msg_contains: username

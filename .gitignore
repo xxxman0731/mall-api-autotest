@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+logs/
+reports/
+mock_server/mall.db
+scripts/server.pid
+.idea/
+.vscode/
+.DS_Store
